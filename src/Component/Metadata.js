@@ -1,5 +1,6 @@
 import React from "react"
 import "./Metadata.css"
+import LectureTagsContainer from "../Container/LectureTagsContainer"
 function Metadata(props){
     return(
         <div className="Metadata">
@@ -63,7 +64,10 @@ function Metadata(props){
                 placeholder="hostIntro"
                 onChange={props.handleChange}
                 />
-                
+                <br />
+                    LectureTags
+                <br />
+                <LectureTagsContainer setState={props.setState}/>
                 {/* Todo lectureTags!!!!!! */}
                 {/* <input 
                 type="text" 
@@ -136,7 +140,7 @@ function Metadata(props){
                 <button onClick={props.handleReset}> Reset</button>
             </form>
 
-            <p>lectureName:{props.lectureName}</p>
+            {/* <p>lectureName:{props.lectureName}</p>
             <br />
             <p>hostName:{props.hostName}</p>
             <br />
@@ -152,10 +156,10 @@ function Metadata(props){
             <br />
             <p>recapVideoTimeElapsed:{props.recapVideoTimeElapsed}</p>
             <br />
-            {/* <p>id:{props.id}</p>
-            <br /> */}
-            <p>OnGoing? {props.ongoing? "Yes": "No"}</p>
+            <p>id:{props.id}</p>
             <br />
+            <p>OnGoing? {props.ongoing? "Yes": "No"}</p>
+            <br /> */}
 
 
 

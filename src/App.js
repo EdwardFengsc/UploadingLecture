@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import Metadata from "./Component/Metadata"
 import MetadataContainer from "./Container/MetadataContainer"
-import Picturedata from "./Component/Picturedata"
+import PicturedataContainer from "./Container/PicturedataContainer"
 import JsonUtils from "./JsonParse/JsonUitl"
 import './App.css';
+import eventProxy from "../node_modules/react-eventproxy/src/eventProxy"
+// import eventProxy from "../node_modules/react-eventproxy/src/eventProxy"
 
 
 class App extends Component{
@@ -28,7 +29,8 @@ class App extends Component{
       {/* //       // <div> */}
         <header className="App-header">
       {/* //         <header> */}
-          <MetadataContainer transferId = {this.transferId}/>
+          <MetadataContainer />
+          <PicturedataContainer />
         </header>
       </div>
 

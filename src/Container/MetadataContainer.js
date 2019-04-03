@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Metadata from "../Component/Metadata"
 import JsonUtils from "../JsonParse/JsonUitl"
+import eventProxy from "../../node_modules/react-eventproxy/src/eventProxy"
+// import eventProxy from "../node_modules/react-eventproxy/src/eventProxy"
 class MetadataContainer extends Component {
     constructor(){
       super()
@@ -20,6 +22,7 @@ class MetadataContainer extends Component {
       this.handleChange = this.handleChange.bind(this)
       this.handleReset = this.handleReset.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
+      this._setState = this.setState.bind(this)
     }
     handleChange(event){
       const {name,value,type,checked} = event.target
@@ -55,11 +58,25 @@ class MetadataContainer extends Component {
         }
       }).then(res => res.json()).then(response => {
           const ID = response.id
-          console.log(ID)
+          // console.log(ID)
+          console.log(response)
           this.setState({id: ID})
+          alert("Lecture text information upload success!")
+          eventProxy.trigger("id",ID)
           // this.props.transferId(ID)
       }).catch(error => console.error("Error",error))
     //   console.log(JsonUtils.mapToJson(JsonUtils.objToStrMap(this.state)))
+    }
+    componentDidUpdate(){
+      console.log("start")
+      eventProxy.on("lectureTags",(newtags) => {
+        this.setState({lectureTages: newtags})
+        // const newlectureTag = (
+        //   lectureTags.map(item => {return item.value})
+        // )
+        // this.setState({lectureTags: newlectureTag})
+      }
+      )
     }
     render() {
       console.log(this.state)
@@ -72,6 +89,7 @@ class MetadataContainer extends Component {
           handleChange = {this.handleChange}
           handleReset = {this.handleReset}
           handleSubmit = {this.handleSubmit}
+          setState = {this._setState}
           {...this.state}
           />
           </header>
