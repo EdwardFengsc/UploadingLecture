@@ -48,7 +48,13 @@ class JsonUtils extends Component {
     static   objToStrMap(obj){
         let strMap = new Map();
         for (let k of Object.keys(obj)) {
-            if ((k === "id" && obj[k] == "") || k === "startDate"){
+            if ((k === "id" && obj[k] == "") || 
+            k === "startDate" || 
+            k === "host_avatar" ||
+            k === "host_avatar_rect" ||
+            k === "sharing_pic" ||
+            k === "lecture_banner"
+            ){
                 continue;
             }
             strMap.set(k,obj[k]);

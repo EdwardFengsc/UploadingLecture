@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Metadata from "../Component/Metadata"
 import JsonUtils from "../JsonParse/JsonUitl"
 import eventProxy from "../../node_modules/react-eventproxy/src/eventProxy"
+var formData = new FormData()
 // import eventProxy from "../node_modules/react-eventproxy/src/eventProxy"
 class MetadataContainer extends Component {
     constructor(){
@@ -18,7 +19,12 @@ class MetadataContainer extends Component {
         startTime:12312414,
         recapVideoTimeElapsed:123214,
         id:"",
-        ongoing:true
+        ongoing:true,
+        id:"",
+        host_avatar:"",
+        host_avatar_rect:"",
+        lecture_banner:"",
+        sharing_pic:""
       }
       this.handleChange = this.handleChange.bind(this)
       this.handleReset = this.handleReset.bind(this)
@@ -26,7 +32,7 @@ class MetadataContainer extends Component {
       this._setState = this.setState.bind(this)
     }
     handleChange(event){
-      const {name,value,type,checked} = event.target
+      const {name,value,type,checked,files} = event.target
       if (name ==="startDate"){
         var parts = value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
         console.log(parts)
@@ -39,7 +45,13 @@ class MetadataContainer extends Component {
         // this.setState({startTime:Date.UTC(value)})
 
       }
-      type === "checkbox" ? this.setState({[name]: checked}) : this.setState({[name]: value})
+      if(type === "file"){
+        this.setState({[name]:value}) 
+        formData.append(name,files[0])
+      }
+      else{
+        type === "checkbox" ? this.setState({[name]: checked}) : this.setState({[name]: value}) 
+      }   
     }
     handleReset(event){
       event.preventDefault()
@@ -55,13 +67,18 @@ class MetadataContainer extends Component {
         startTime:0,
         recapVideoTimeElapsed:0,
         id:"",
-        ongoing:false
+        ongoing:false,
+        host_avatar:"",
+        host_avatar_rect:"",
+        lecture_banner:"",
+        sharing_pic:"",
       })
+      formData = new FormData()
     }
     handleSubmit(event){
       event.preventDefault()
       const metedatajson = JsonUtils.mapToJson(JsonUtils.objToStrMap(this.state))
-      // console.log(metedatajson)
+      console.log(metedatajson)
       const url = "http://localhost:8080/family/lecture"
       fetch(url,{
         method: 'POST',
@@ -70,15 +87,50 @@ class MetadataContainer extends Component {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyZGU0YmMxZi0zY2IxLTQ4ZDMtOWY3NC0wYTAxYmU5M2RkZDQiLCJpc3MiOiJodHRwOi8vZXhhbXBsZS5vcmciLCJhdWQiOiJodHRwOi8vZXhhbXBsZS5vcmciLCJzdWIiOiJGYW1pbHktVXNlci1iOTNjN2YxNC0xMjI0LTQ1OGItYWFmMS02NTI5NjM3MTA5M2QiLCJpYXQiOjE1NTM4OTU4MDgsImV4cCI6MTU1NjQ4NzgwOCwiYXV0aG9yaXRpZXMiOlsiU1lTVEVNX0FETUlOIl0sInJlZnJlc2hDb3VudCI6MCwicmVmcmVzaExpbWl0IjoyMDAwfQ.LwFp-NR5Wdmo2lxzOoRM7t0uze1EFcLhRGiVfdJR6cI'
         }
-      }).then(res => res.json()).then(response => {
+      }).then(res => {
+        if (res.ok){
+        res.json().then(response => {
           const ID = response.id
           // console.log(ID)
           // console.log(response)
           this.setState({id: ID})
-          alert("Lecture text information upload success!")
-          eventProxy.trigger("id",ID)
+           alert("Uploading text part successful!")
+          // eventProxy.trigger("id",ID)
           // this.props.transferId(ID)
       }).catch(error => console.error("Error",error))
+      .then( () =>{
+        console.log(this.state.id)
+        const urlp = "http://localhost:8080/family/lecture/pictures"
+      // console.log(formData.getAll())
+      // var formData = new FormData()
+      // this.state.map(item => item.)
+      // console.log(this.state)
+      formData.append("id","e4de3598-994b-4f60-8c13-c92366739bc8")
+      // formData.append("id",this.state.id)
+      // for (var i=0; i < photos.files.length; i++){
+      //     formData.append()
+      // }
+
+      fetch(urlp,{
+          method: 'POST',
+          body: formData,
+          headers:{
+            'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyZGU0YmMxZi0zY2IxLTQ4ZDMtOWY3NC0wYTAxYmU5M2RkZDQiLCJpc3MiOiJodHRwOi8vZXhhbXBsZS5vcmciLCJhdWQiOiJodHRwOi8vZXhhbXBsZS5vcmciLCJzdWIiOiJGYW1pbHktVXNlci1iOTNjN2YxNC0xMjI0LTQ1OGItYWFmMS02NTI5NjM3MTA5M2QiLCJpYXQiOjE1NTM4OTU4MDgsImV4cCI6MTU1NjQ4NzgwOCwiYXV0aG9yaXRpZXMiOlsiU1lTVEVNX0FETUlOIl0sInJlZnJlc2hDb3VudCI6MCwicmVmcmVzaExpbWl0IjoyMDAwfQ.LwFp-NR5Wdmo2lxzOoRM7t0uze1EFcLhRGiVfdJR6cI'
+          }
+        }).then(res => res.json()).then(response => {
+            console.log(response)
+          //   this.setState({id: ID})
+          //   alert("Lecture text information upload success!")
+          //   eventProxy.trigger("id",ID)
+            // this.props.transferId(ID)
+        }).catch(error => console.error("Error",error))})
+    }
+    else{
+      alert(res.statusText)
+    }
+        
+      })
+      
     //   console.log(JsonUtils.mapToJson(JsonUtils.objToStrMap(this.state)))
     }
     // componentDidUpdate(){

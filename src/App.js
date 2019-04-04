@@ -27,7 +27,7 @@ class App extends Component{
         <header className="App-header">
       {/* //         <header> */}
           <MetadataContainer />
-          <PicturedataContainer />
+          {/* <PicturedataContainer /> */}
         </header>
       </div>
 
