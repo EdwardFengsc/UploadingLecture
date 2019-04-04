@@ -14,6 +14,7 @@ class MetadataContainer extends Component {
         hostIntro:"hhhadasdasdsadasdhasihfiahisahfihiahfiashfifhsai",
         lectureTags:["aaa","bbb"],
         lectureIntro:"aa",
+        startDate:"",
         startTime:12312414,
         recapVideoTimeElapsed:123214,
         id:"",
@@ -26,8 +27,19 @@ class MetadataContainer extends Component {
     }
     handleChange(event){
       const {name,value,type,checked} = event.target
-      type === "checkbox" ? this.setState({[name]: checked}) : this.setState({[name]:value})
-  
+      if (name ==="startDate"){
+        var parts = value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+        console.log(parts)
+        // const date = new Date(parts[1],parts[2] - 1,parts[3],parts[4],parts[5],0,0)
+        // console.log(parts[0])
+        // console.log(parts[1])
+        // console.log(date.getMilliseconds())
+        const starttime = (new Date(parts[1],parts[2] - 1,parts[3],parts[4],parts[5],0,0)).getTime()
+        this.setState({startTime:starttime})
+        // this.setState({startTime:Date.UTC(value)})
+
+      }
+      type === "checkbox" ? this.setState({[name]: checked}) : this.setState({[name]: value})
     }
     handleReset(event){
       event.preventDefault()
@@ -39,6 +51,7 @@ class MetadataContainer extends Component {
         hostIntro:"",
         lectureTags:["aaa","bbb"],
         lectureIntro:"",
+        startDate:"",
         startTime:0,
         recapVideoTimeElapsed:0,
         id:"",
@@ -48,6 +61,7 @@ class MetadataContainer extends Component {
     handleSubmit(event){
       event.preventDefault()
       const metedatajson = JsonUtils.mapToJson(JsonUtils.objToStrMap(this.state))
+      // console.log(metedatajson)
       const url = "http://localhost:8080/family/lecture"
       fetch(url,{
         method: 'POST',
@@ -59,7 +73,7 @@ class MetadataContainer extends Component {
       }).then(res => res.json()).then(response => {
           const ID = response.id
           // console.log(ID)
-          console.log(response)
+          // console.log(response)
           this.setState({id: ID})
           alert("Lecture text information upload success!")
           eventProxy.trigger("id",ID)
@@ -67,19 +81,21 @@ class MetadataContainer extends Component {
       }).catch(error => console.error("Error",error))
     //   console.log(JsonUtils.mapToJson(JsonUtils.objToStrMap(this.state)))
     }
-    componentDidUpdate(){
-      console.log("start")
-      eventProxy.on("lectureTags",(newtags) => {
-        this.setState({lectureTages: newtags})
-        // const newlectureTag = (
-        //   lectureTags.map(item => {return item.value})
-        // )
-        // this.setState({lectureTags: newlectureTag})
-      }
-      )
-    }
+    // componentDidUpdate(){
+    //   // console.log("start")
+    //   eventProxy.on("lectureTags",(newtags) => {
+    //     this.setState({lectureTages: newtags})
+    //     // const newlectureTag = (
+    //     //   lectureTags.map(item => {return item.value})
+    //     // )
+    //     // this.setState({lectureTags: newlectureTag})
+    //   }
+    //   )
+    // }
     render() {
       console.log(this.state)
+      console.log(Date(1548957600000))
+        
       return (
         <div>
         {/* // <div> */}

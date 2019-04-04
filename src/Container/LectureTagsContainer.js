@@ -65,7 +65,7 @@ class LectureTagsContainer extends Component{
     }
     handleAdd(){
         counter ++
-        console.log(counter)
+        // console.log(counter)
         // const newtags = (this.state.map(item => {return item}),{id:counter,value:""})
         // console.log(newtags)
         this.setState(prevState =>{
@@ -101,11 +101,8 @@ class LectureTagsContainer extends Component{
     //     eventProxy.trigger("lectureTags", this.state.lectureTags)
     // }
     render(){
-        const tags = (this.state.lectureTags.map( tag => 
-            {return tag.value}
-            ))
-        console.log(tags)
-        console.log(this.props)
+        // console.log(tags)
+        // console.log(this.props)
         
         const lecturetaglist = this.state.lectureTags.map(tag => (
                 <LectureTag 
@@ -120,10 +117,13 @@ class LectureTagsContainer extends Component{
         return(
             <div>
                     {lecturetaglist}
-                    <button type ="button" onClick={this.handleAdd}>Add Tag</button>
+                    <button 
+                    type ="button" 
+                    onClick={this.handleAdd} 
+                    style={{marginTop:"5px"}}
+                    className="btn btn-primary btn-sm"
+                    >添加标签</button>
             </div>
-            
-            
         )
     }
 

@@ -4,26 +4,31 @@
 form {
     text-align: left;
     margin: 0;
-    padding: 20px;
-    font-family: fantasy;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
   }
   input {
-    font-family: fantasy;
-    font-size: calc(10px + 2vmin);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 5px;
     padding: 5px
   }
   textarea{
-    font-family: fantasy;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: calc(10px + 2vmin);
     padding: 5px
   }
   code {
-    font-family: fantasy;
+    font-family: Arial, Helvetica, sans-serif;
   }
   button{
-    font-family: fantasy;
-    font-size: calc(10px + 2vmin);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+  }
+
+  label{
+    margin-bottom: -20%;
+    padding-bottom: -20px;
   }

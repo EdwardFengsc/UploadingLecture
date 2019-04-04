@@ -6,7 +6,7 @@ function Metadata(props){
         <div className="Metadata">
             <form>
                 <br />
-                        LectureName:
+                        分享会名称:
                 <br />
                 <input 
                 type="text" 
@@ -14,9 +14,10 @@ function Metadata(props){
                 value={props.lectureName}
                 placeholder="LectureName"
                 onChange={props.handleChange}
+                size="12"
                 />
                 <br />
-                        HostName:
+                        主讲人名字:
                 <br />
                 <input 
                 type="text" 
@@ -24,9 +25,10 @@ function Metadata(props){
                 value={props.hostName}
                 placeholder="HostName"
                 onChange={props.handleChange}
+                size="12"
                 />
                 <br />
-                        HostTitle:
+                        主讲人头衔:
                 <br />
                 <input 
                 type="text" 
@@ -34,9 +36,10 @@ function Metadata(props){
                 value={props.hostTitle}
                 placeholder="hostTitle"
                 onChange={props.handleChange}
+                size="12"
                 />
                 <br />
-                    HostTag:
+                    讲师标签:
                 <br />
                 <input 
                 type="text" 
@@ -44,6 +47,7 @@ function Metadata(props){
                 value={props.hostTag}
                 placeholder="hostTag"
                 onChange={props.handleChange}
+                size="12"
                 />
                 {/* <br />
                 <input 
@@ -54,7 +58,7 @@ function Metadata(props){
                 onChange={props.handleChange}
                 /> */}
                 <br />
-                    HostIntro:
+                    讲师介绍:
                 <br />
                 <textarea 
                 name="hostIntro"
@@ -65,7 +69,7 @@ function Metadata(props){
                 onChange={props.handleChange}
                 />
                 <br />
-                    LectureTags
+                    分享会标签:
                 <br />
                 <LectureTagsContainer setState={props.setState}/>
                 {/* Todo lectureTags!!!!!! */}
@@ -78,7 +82,7 @@ function Metadata(props){
                 />
                 <br /> */}
                 <br />
-                    LectureIntro:
+                    分享会介绍:
                 <br />
                 <textarea 
                 name="lectureIntro"
@@ -96,16 +100,16 @@ function Metadata(props){
                 onChange={props.handleChange}
                 /> */}
                 <br />
-                    StartTime:
+                    分享会开始时间:
                 <br />
                 <input 
-                type="text" 
-                name="startTime" 
-                value={props.startTime}
-                placeholder="startTime"
+                type="datetime-local" 
+                name="startDate" 
+                value={props.startDate}
+                // placeholder="startTime"
                 onChange={props.handleChange}
                 />
-                <br />
+                {/* <br />
                     RecapVideoTimeElapsed:
                 <br />
                 <input 
@@ -114,7 +118,7 @@ function Metadata(props){
                 value={props.recapVideoTimeElapsed}
                 placeholder="recapVideoTimeElapsed"
                 onChange={props.handleChange}
-                />
+                /> */}
                 {/* <br />
                     ID:
                 <br />
@@ -133,11 +137,18 @@ function Metadata(props){
                 name="ongoing" 
                 checked={props.ongoing}
                 onChange={props.handleChange}
-                />OnGoing?
+                />是否是下一场分享会?
                 </label>
+                
                 <br />
-                <button onClick={props.handleSubmit} style={{marginRight:"15px"}}>Submit</button>
-                <button onClick={props.handleReset}> Reset</button>
+                <button 
+                className="btn btn-primary btn-sm" 
+                style={{lineHeight: "5%"}} 
+                onClick={props.handleSubmit} 
+                style={{marginRight:"5px"}}>提交</button>
+                <button 
+                className="btn btn-primary btn-sm" 
+                onClick={props.handleReset}>重置</button>
             </form>
 
             {/* <p>lectureName:{props.lectureName}</p>

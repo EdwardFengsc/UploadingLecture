@@ -1,9 +1,8 @@
-'use strict';
 import React, {Component} from 'react'
 /**
  *JsonUitl的实现
  */
-class JsonUtils extends React.Component {
+class JsonUtils extends Component {
 
     /**
      *字符串转json
@@ -49,7 +48,7 @@ class JsonUtils extends React.Component {
     static   objToStrMap(obj){
         let strMap = new Map();
         for (let k of Object.keys(obj)) {
-            if (k === "id"){
+            if ((k === "id" && obj[k] == "") || k === "startDate"){
                 continue;
             }
             strMap.set(k,obj[k]);

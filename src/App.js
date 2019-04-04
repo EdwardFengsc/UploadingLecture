@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import MetadataContainer from "./Container/MetadataContainer"
 import PicturedataContainer from "./Container/PicturedataContainer"
-import JsonUtils from "./JsonParse/JsonUitl"
 import './App.css';
-import eventProxy from "../node_modules/react-eventproxy/src/eventProxy"
 // import eventProxy from "../node_modules/react-eventproxy/src/eventProxy"
 
 

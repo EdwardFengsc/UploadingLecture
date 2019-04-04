@@ -1,5 +1,4 @@
 import React,{Component} from "react"
-import Metadata from "../Component/Metadata"
 import JsonUtils from "../JsonParse/JsonUitl"
 import eventProxy from "react-eventproxy/src/eventProxy";
 import Picturedata from "../Component/Picturedata";
@@ -14,6 +13,7 @@ class PicturedataContainer extends Component{
             host_avatar_rect:"",
             lecture_banner:"",
             sharing_pic:"",
+            // formdata = new FormData()
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleReset = this.handleReset.bind(this)
@@ -23,9 +23,12 @@ class PicturedataContainer extends Component{
         eventProxy.on("id",(ID) => {this.setState({id:ID})})
     }
     handleChange(event){
-        const {name,value,files,result} = event.target
+        event.preventDefault()
+        const {name,value,files} = event.target
         this.setState({[name]:value})
-        formData.append(name,Array.from(files[0]))
+        console.log(files[0])
+        formData.append(name,files[0])
+        console.log(formData)
         // console.log(event.target.files[0])
         // console.log(formData[name])
         // console.log(Array.from(files))
@@ -60,7 +63,6 @@ class PicturedataContainer extends Component{
             method: 'POST',
             body: formData,
             headers:{
-              'Content-Type': 'multipart/form-data',
               'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyZGU0YmMxZi0zY2IxLTQ4ZDMtOWY3NC0wYTAxYmU5M2RkZDQiLCJpc3MiOiJodHRwOi8vZXhhbXBsZS5vcmciLCJhdWQiOiJodHRwOi8vZXhhbXBsZS5vcmciLCJzdWIiOiJGYW1pbHktVXNlci1iOTNjN2YxNC0xMjI0LTQ1OGItYWFmMS02NTI5NjM3MTA5M2QiLCJpYXQiOjE1NTM4OTU4MDgsImV4cCI6MTU1NjQ4NzgwOCwiYXV0aG9yaXRpZXMiOlsiU1lTVEVNX0FETUlOIl0sInJlZnJlc2hDb3VudCI6MCwicmVmcmVzaExpbWl0IjoyMDAwfQ.LwFp-NR5Wdmo2lxzOoRM7t0uze1EFcLhRGiVfdJR6cI'
             }
           }).then(res => res.json()).then(response => {
